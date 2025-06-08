@@ -1,1 +1,8 @@
 python-telegram-bot==20.6
+aiogram
+aiohttp
+qrcode[pil]
+Pillow
+aiosqlite
+Flask
+gunicorn
