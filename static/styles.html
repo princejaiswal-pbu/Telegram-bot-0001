@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Escrow Bot - Cyberpunk Style Guide</title>
+    <style>
+        /* Cyberpunk Color Palette */
+        :root {
+            --primary-blue: #00D4FF;
+            --primary-pink: #FF006E;
+            --success-green: #00FF88;
+            --warning-yellow: #FFD60A;
+            --danger-red: #FF073A;
+            --dark-blue: #0A0E27;
+            --darker-blue: #020408;
+            --white: #FFFFFF;
+            --light-gray: #B0B0B0;
+            
+            /* Gradient combinations */
+            --gradient-primary: linear-gradient(135deg, var(--primary-blue), var(--primary-pink));
+            --gradient-success: linear-gradient(135deg, var(--success-green), var(--primary-blue));
+            --gradient-warning: linear-gradient(135deg, var(--warning-yellow), var(--danger-red));
+            --gradient-dark: linear-gradient(135deg, var(--dark-blue), var(--darker-blue));
+        }
+
+        body {
+            background: var(--darker-blue);
+            color: var(--white);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .section {
+            background: var(--dark-blue);
+            border: 2px solid var(--primary-blue);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .button-style {
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .button-style:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
+        }
+
+        .button-success {
+            background: var(--gradient-success);
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .button-warning {
+            background: var(--gradient-warning);
+            box-shadow: 0 4px 15px rgba(255, 214, 10, 0.4);
+        }
+
+        .card {
+            background: var(--dark-blue);
+            border: 1px solid var(--primary-blue);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .status-created {
+            color: var(--warning-yellow);
+            text-shadow: 0 0 10px var(--warning-yellow);
+        }
+
+        .status-funded {
+            color: var(--primary-blue);
+            text-shadow: 0 0 10px var(--primary-blue);
+        }
+
+        .status-completed {
+            color: var(--success-green);
+            text-shadow: 0 0 10px var(--success-green);
+        }
+
+        .status-disputed {
+            color: var(--danger-red);
+            text-shadow: 0 0 10px var(--danger-red);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .neon-border {
+            border: 2px solid var(--primary-blue);
+            border-radius: 10px;
+            box-shadow: 
+                0 0 10px var(--primary-blue),
+                inset 0 0 10px rgba(0, 212, 255, 0.1);
+        }
+
+        .cyberpunk-input {
+            background: var(--darker-blue);
+            border: 2px solid var(--primary-blue);
+            border-radius: 5px;
+            color: var(--white);
+            padding: 10px 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .cyberpunk-input:focus {
+            outline: none;
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 15px rgba(255, 0, 110, 0.5);
+        }
+
+        .loading-animation {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-blue);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .matrix-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .matrix-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 212, 255, 0.03) 2px,
+                rgba(0, 212, 255, 0.03) 4px
+            );
+            animation: matrix-scroll 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes matrix-scroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        .emoji-style {
+            font-size: 1.2em;
+            filter: drop-shadow(0 0 5px currentColor);
+        }
+
+        .amount-display {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: var(--success-green);
+            text-shadow: 0 0 10px var(--success-green);
+        }
+
+        .deal-id {
+            font-family: 'Courier New', monospace;
+            color: var(--primary-blue);
+            background: rgba(0, 212, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--primary-blue);
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .section {
+                padding: 15px;
+                margin: 15px 0;
+            }
+            
+            .button-style {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        /* Dark mode enhancements */
+        .dark-gradient {
+            background: linear-gradient(135deg, 
+                var(--darker-blue) 0%, 
+                var(--dark-blue) 50%, 
+                var(--darker-blue) 100%);
+        }
+
+        .cyber-grid {
+            background-image: 
+                radial-gradient(circle at 1px 1px, var(--primary-blue) 1px, transparent 0);
+            background-size: 20px 20px;
+            opacity: 0.1;
+        }
+
+        /* Special effects for important elements */
+        .vip-glow {
+            box-shadow: 
+                0 0 20px var(--primary-blue),
+                0 0 40px var(--primary-blue),
+                0 0 60px var(--primary-blue);
+        }
+
+        .danger-glow {
+            box-shadow: 
+                0 0 20px var(--danger-red),
+                0 0 40px var(--danger-red);
+        }
+
+        .success-glow {
+            box-shadow: 
+                0 0 20px var(--success-green),
+                0 0 40px var(--success-green);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Quick Escrow Bot Style Guide</h1>
+        
+        <div class="section">
+            <h2>Color Palette</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                <div class="card" style="background: var(--primary-blue); color: var(--darker-blue);">
+                    <strong>Primary Blue</strong><br>#00D4FF
+                </div>
+                <div class="card" style="background: var(--primary-pink); color: var(--white);">
+                    <strong>Primary Pink</strong><br>#FF006E
+                </div>
+                <div class="card" style="background: var(--success-green); color: var(--darker-blue);">
+                    <strong>Success Green</strong><br>#00FF88
+                </div>
+                <div class="card" style="background: var(--warning-yellow); color: var(--darker-blue);">
+                    <strong>Warning Yellow</strong><br>#FFD60A
+                </div>
+                <div class="card" style="background: var(--danger-red); color: var(--white);">
+                    <strong>Danger Red</strong><br>#FF073A
+                </div>
+                <div class="card" style="background: var(--dark-blue); color: var(--white);">
+                    <strong>Dark Blue</strong><br>#0A0E27
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Button Styles</h2>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                <button class="button-style">Primary Action</button>
+                <button class="button-style button-success">Success Action</button>
+                <button class="button-style button-warning">Warning Action</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Status Indicators</h2>
+            <div class="card">
+                <div class="status-created">⏳ Created - Waiting for payment</div>
+                <div class="status-funded">💰 Funded - Payment received</div>
+                <div class="status-completed">✅ Completed - Deal finished</div>
+                <div class="status-disputed">⚠️ Disputed - Under review</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Typography Examples</h2>
+            <div class="card">
+                <h3 class="glow-text">🔐 Deal #ABC12345</h3>
+                <p class="amount-display">Amount: ₹45,000.00</p>
+                <p>Description: iPhone 14 Pro Max 256GB Space Black</p>
+                <span class="deal-id">#ABC12345</span>
+            </div>
+        </div>
+
+        <div class="section matrix-effect">
+            <h2>Animated Elements</h2>
+            <div class="card slide-in">
+                <div class="pulse-animation" style="display: inline-block;">
+                    🚀 <span class="loading-animation"></span> Processing...
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Special Effects</h2>
+            <div style="display: grid; gap: 15px;">
+                <div class="card vip-glow">VIP Glow Effect</div>
+                <div class="card success-glow">Success Glow Effect</div>
+                <div class="card danger-glow">Danger Glow Effect</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Form Elements</h2>
+            <div class="card">
+                <input type="text" class="cyberpunk-input" placeholder="Enter deal description..." style="width: 100%; margin-bottom: 10px;">
+                <input type="number" class="cyberpunk-input" placeholder="Amount in INR" style="width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate cards on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('slide-in');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+
+            // Add click effects to buttons
+            document.querySelectorAll('.button-style').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
