@@ -39,7 +39,9 @@ async def create_bot():
 
 async def on_startup(app: web.Application):
     bot = app["bot"]
+    print("🚀 Setting webhook:", WEBHOOK_URL)  # <--- Add this line
     await bot.set_webhook(WEBHOOK_URL, secret_token=WEBHOOK_SECRET)
+
 
 
 async def on_shutdown(app: web.Application):
