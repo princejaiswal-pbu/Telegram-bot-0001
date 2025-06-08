@@ -14,7 +14,7 @@ from config import BOT_TOKEN
 # Webhook settings
 WEBHOOK_PATH = "/webhook"
 WEBHOOK_SECRET = "supersecret"  # Secure random string
-BASE_WEBHOOK_URL = os.environ.get("WEBHOOK_BASE", "https://your-bot-service.onrender.com")
+BASE_WEBHOOK_URL = os.environ.get("WEBHOOK_BASE", "https://telegram-bot-0001-vuiv.onrender.com")
 WEBHOOK_URL = f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}"
 
 
